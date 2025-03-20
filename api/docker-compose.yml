@@ -1,0 +1,42 @@
+services:
+  web:
+    build:
+      dockerfile:
+        Dockerfile.web
+      context: .
+    working_dir: "/src-build/src"
+    volumes:
+      - .:/src
+
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+    restart: always
+
+    depends_on:
+      - database
+    env_file: 
+      - local.env
+
+
+  database:
+    image: postgres:14.6-alpine
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    container_name: buid-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${pg_password} 
+      POSTGRES_DB: Building
+    env_file: 
+      - local.env
+    
+    
+    ports:
+      - 5432:5432
+
+
+volumes:
+  postgres_data:
