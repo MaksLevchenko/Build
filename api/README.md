@@ -1,29 +1,23 @@
 # Тестовое приложение
 
-# 
+# Клонируйте проект командой: `git clone https://github.com/MaksLevchenko/Build.git`
+
+## Переименнуйте файл local.env.dev в local.env и присвойте переменным внутри него актуальные данные
 
 ### Переменные окружения
 
-* PG_HOST
-* PG_PORT
-* PG_DB
-* PG_USER
-* PG_PASSWORD
+* pg_db
+* pg_password
+* secret_api_key
 
-### Команды для разработки
+## В терминале перейдите в папку src командой `cd /api/src`
 
-* Запуск сервиса: `uvicorn main:app --host 0.0.0.0 --port 8000 --reload`
-* Применить актуальные миграции: `docker compose exec web alembic upgrade head  `
-* Сгенерировать новую миграцию `alembic revision --autogenerate -m "<msg>"`
-* Откатить миграцию на одну назад `alembic downgrade -1`
+# При запущеном docker descktop выполните команду: `docker-compose build`
 
----
+# После окончания сборки контейнера выполните: `docker-compose up -d`
 
-WORK DIR: ./src
-PYTHONUNBUFFERED=1;PYTHONDONTWRITEBYTECODE=1
+# Затем нужно применить миграции. Для этого выполните команду: `docker compose exec web alembic upgrade head`
 
-## Установка pre-commit хука для автоматического поднятия версии при git commit
+### Теперь перейдите в браузере по адресу: `http://127.0.0.1:8000/docs#/`
 
-```commandline
-cp pre-commit ./.git/hooks/pre-commit
-```
+### Осталось только заполнить базу данных. Это можно сделать выполнив самый нижний роут, или перейти по адресу: `http://127.0.0.1:8000/organizations/fill-the-database/`
